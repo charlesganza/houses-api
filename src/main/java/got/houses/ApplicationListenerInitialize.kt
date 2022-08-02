@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component
 @Component
 class ApplicationListenerInitialize @Autowired constructor(val houseService: HouseService, val dtoMapper: DTOMapper) : ApplicationListener<ApplicationReadyEvent?> {
     override fun onApplicationEvent(event: ApplicationReadyEvent) {
-        val houses = houseService.fetchAllHouses()
         //application is ready, fetch and cache houses
+        val houses = houseService.fetchAllHouses()
         if(houses != null) houseService.saveHouses(dtoMapper.housesDTOToHouses(houses))
     }
 }

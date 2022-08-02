@@ -1,26 +1,16 @@
 package got.houses.house
 
-import got.houses.model.House
 import got.houses.model.HouseDTO
-import got.houses.networking.RepositoryService
+import got.houses.networking.NetClient
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class HouseService @Autowired constructor(val repositoryService: RepositoryService, val houseRepository: HouseRepository) {
+class HouseService @Autowired constructor(val netClient: NetClient) {
 
     //get houses from API
-    fun fetchAllHouses(): List<HouseDTO>? {
-        return repositoryService.getService().getHouses().execute().body()
-    }
-
-    fun saveHouses(houses: List<House>) {
-        houseRepository.saveAll(houses)
-    }
-
-    //search cached houses
-    fun findHouse(query: String): List<House> {
-        return houseRepository.findAll()
+    fun searchHouse(): List<HouseDTO>? {
+        return netClient.getService().getHouses().execute().body()
     }
 
 }

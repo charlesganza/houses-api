@@ -13,8 +13,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @EnableWebSecurity
 class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 
-    override fun configure(http: HttpSecurity?) {
-        http?.cors()?.and()
+    override fun configure(http: HttpSecurity) {
+        http.authorizeRequests().antMatchers("/").permitAll().and().authorizeRequests().antMatchers("/console/**").permitAll()
+        http.cors()?.and()
     }
 
     @Bean

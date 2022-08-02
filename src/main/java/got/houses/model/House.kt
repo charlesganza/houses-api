@@ -4,29 +4,29 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "HOUSE")
-data class House(
+class House {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int,
-    val url: String,
-    val name: String,
-    val region: String,
-    val coatOfArms: String,
-    val words: String,
+    val id: Int? = null
+    val url: String? = null
+    val name: String? = null
+    val region: String? = null
+    val coatOfArms: String? = null
+    val words: String? = null
     @ElementCollection(targetClass = String::class)
-    val titles: List<String>,
+    val titles: List<String>? = null
     @ElementCollection(targetClass = String::class)
-    val seats: List<String>,
-    val currentLord: String,
-    val heir: String,
-    val overlord: String,
-    val founded: String,
-    val founder: String,
-    val diedOut: String,
+    val seats: List<String>? = null
+    val currentLord: String? = null
+    val heir: String? = null
+    val overlord: String? = null
+    val founded: String? = null
+    val founder: String? = null
+    val diedOut: String? = null
     @ElementCollection(targetClass = String::class)
-    val ancestralWeapons: List<String>,
+    val ancestralWeapons: List<String>? = null
     @ElementCollection(targetClass = String::class)
-    val cadetBranches: List<String>,
+    val cadetBranches: List<String>? = null
     @ElementCollection(targetClass = String::class)
-    val swornMembers: List<String>
-)
+    val swornMembers: List<String>? = null
+}

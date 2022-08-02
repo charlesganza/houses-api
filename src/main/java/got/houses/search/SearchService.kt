@@ -2,7 +2,6 @@ package got.houses.search
 
 import got.houses.house.HouseService
 import got.houses.model.House
-import got.houses.networking.RepositoryService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 

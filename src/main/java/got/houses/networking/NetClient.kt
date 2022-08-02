@@ -8,7 +8,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory
 import java.time.Duration
 
 @Service
-class RepositoryService {
+class NetClient {
 
     private val httpLoggingInterceptor = HttpLoggingInterceptor()
 
@@ -29,7 +29,7 @@ class RepositoryService {
         .addConverterFactory(JacksonConverterFactory.create())
         .build()
 
-    fun getService(): Repository {
+    fun instance(): Repository {
         return retrofit.create(Repository::class.java)
     }
 
