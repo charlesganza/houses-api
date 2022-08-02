@@ -29,8 +29,8 @@ class NetClient {
         .addConverterFactory(JacksonConverterFactory.create())
         .build()
 
-    fun instance(): Repository {
-        return retrofit.create(Repository::class.java)
+    fun houseRepository(): HouseRepository {
+        return retrofit.create(HouseRepository::class.java)
     }
 
 }

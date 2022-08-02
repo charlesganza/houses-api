@@ -1,6 +1,5 @@
 package got.houses.search
 
-import got.houses.mapper.DTOMapper
 import got.houses.model.HouseDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -16,11 +15,11 @@ import javax.validation.constraints.NotBlank
 @Validated
 @RestController
 @RequestMapping("/api")
-class SearchController @Autowired constructor(val searchService: SearchService, val dtoMapper: DTOMapper) {
+class SearchController @Autowired constructor(val searchService: SearchService) {
 
     @RequestMapping(value = ["search"], method = [RequestMethod.GET])
-    fun search(@RequestParam(name = "query") @Valid @NotBlank query: String): ResponseEntity<List<HouseDTO>> {
-        val houses: List<HouseDTO> = dtoMapper.housesToHousesDTO(searchService.searchHouses(query))
+    fun search(@RequestParam(name = "query") @Valid @NotBlank house: String): ResponseEntity<List<HouseDTO>> {
+        val houses: List<HouseDTO>? = searchService.findHouse(house)
 
         return ResponseEntity<List<HouseDTO>>(houses, null, HttpStatus.OK)
     }

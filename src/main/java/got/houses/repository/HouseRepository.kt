@@ -2,14 +2,13 @@ package got.houses.networking
 
 import retrofit2.Call
 import retrofit2.http.*
-import got.houses.model.House
 import got.houses.model.HouseDTO
 
-interface Repository {
+interface HouseRepository {
 
     @GET(Endpoints.ENDPOINT_SEARCH_HOUSES)
     @Headers(ContentType.CONTENT_TYPE, ContentType.ACCEPT)
-    fun getHouses(): Call<List<HouseDTO>>
+    fun findHouse(@Query("name") house: String): Call<List<HouseDTO>>
 
 }
 
