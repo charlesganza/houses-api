@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  # API service
+  app-server:
+    build:
+      context: ./got-api
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" 
+    restart: always
+    networks: 
+      - backend
+      - frontend
+    image: got-api
+
+  # Frontend Service 
+  app-front-end:
+    build:
+      context: ./got-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "9090:80" 
+    restart: always
+    depends_on:
+      - app-server
+    networks:
+      - frontend  
+    image: got-front-end
+
+networks:
+  backend:
+  frontend: 
