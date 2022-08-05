@@ -1,8 +1,8 @@
-FROM openjdk:12
+FROM openjdk:17
 
 RUN mkdir app
 WORKDIR /
 
-COPY zatec-exec.jar app.jar
+COPY mhp-exec.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "/app.jar"]
