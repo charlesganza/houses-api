@@ -2,9 +2,9 @@
 Project Overview 
 --------------------
 
-* Uses Kotlin
+* Uses **Kotlin 1.7**
 
-* Requires a minimum of **Java version 8**
+* Requires at least **Java 17** and **Gradle 7.5+**
 
 * Retrofit for networking
 
@@ -12,18 +12,34 @@ Project Overview
 
 * Multi-Threading is handled using **Coroutines**
 
-------------
-How to build
-------------
+* Docker version 20
 
-this project uses Gradle as the build system. use /.gradlew on Unix systems or gradlew.bat on Windows systems.
+--------------------
+How to build and run
+--------------------
 
-to build the project, navigate to the root of the project where module level build.gradle is located /Zatec/
+the API alongside the frontend use Docker Compose to run. Relevant Docker version is mentioned above
 
-> **gradle bootRun** (this will run the project at :8080)
+to build and run this project, create a new directory and name it **mhp**. cd into that directory and then:
 
-> **gradle build** (this will build a JAR for running)
+> git clone git@github.com:charlesganza/houses-api.git got-api
 
-you can use the the flag **--no-build-cache** to tell gradle to build from scratch.
+> git clone git@github.com:charlesganza/houses-frontend.git got-frontend
 
-JAR output is located at  **/project-name/libs/**
+> git clone git@github.com:charlesganza/got-houses-compose-file.git .
+
+while in the adjacent folder you just created, run the below command
+> docker-compose up
+
+once Docker finishes getting everything working, go to **localhost:9090**
+
+You should now see the project live
+
+----
+API
+----
+The API runs on localhost:8080 and is documented as follows:
+
+| Endpoint    | Accepts | Method | Request query       | Response |
+|-------------|---------|--------|---------------------|----------|
+| /api/search | -       | GET    | ?query=House Algood |      [{"url":"https://www.anapioficeandfire.com/api/houses/1","name":"House Algood","region":"The Westerlands","coatOfArms":"A golden wreath, on a blue field with a gold border(Azure, a garland of laurel within a bordure or)","words":"","titles":[""],"seats":[""],"currentLord":"","heir":"","overlord":"https://www.anapioficeandfire.com/api/houses/229","founded":"","founder":"","diedOut":"","ancestralWeapons":[""],"cadetBranches":[],"swornMembers":[]}]    |

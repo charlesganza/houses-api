@@ -1,8 +1,11 @@
-FROM openjdk:17
+FROM gradle:7.5-jdk17-alpine
 
-RUN mkdir app
 WORKDIR /
 
-COPY mhp-exec.jar app.jar
+#copy everything
+COPY . ./
 
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+#build the jar
+RUN gradle bootJar
+
+ENTRYPOINT ["java", "-jar", "/build/libs/app.jar"]

@@ -1,5 +1,7 @@
+import org.gradle.internal.impldep.org.fusesource.jansi.AnsiRenderer.test
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
 	id("org.springframework.boot") version "2.7.2"
@@ -7,6 +9,7 @@ plugins {
 	kotlin("jvm") version "1.7.10"
 	kotlin("plugin.spring") version "1.7.10"
 	kotlin("kapt") version "1.7.10"
+	id("org.asciidoctor.convert") version "1.5.12"
 }
 
 group = "houses"
@@ -58,7 +61,8 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter-api")
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
-	implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("spring-security-starter.jar"))))
+	//rest docs
+	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc:2.0.6.RELEASE")
 }
 
 tasks.withType<KotlinCompile> {
@@ -66,6 +70,10 @@ tasks.withType<KotlinCompile> {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
 		jvmTarget = "17"
 	}
+}
+
+tasks.withType<BootJar> {
+	archiveFileName.set("app.jar")
 }
 
 tasks.withType<Test> {
