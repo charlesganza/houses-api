@@ -1,10 +1,11 @@
 package got.houses
 
 import got.houses.search.SearchController
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.hamcrest.CoreMatchers.containsString
+import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
@@ -14,21 +15,19 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@RunWith(SpringRunner::class)
-@SpringBootTest
-@AutoConfigureRestDocs(outputDir = "target/snippets")
-@WebMvcTest(SearchController::class)
+@AutoConfigureRestDocs(outputDir = "build/snippets")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
 class ApiTest {
 
     @Autowired
     private lateinit var mockMvc: MockMvc
 
     @Test
-    @Throws(Exception::class)
     fun `successful search`(){
-        mockMvc.perform(get("/search?house=Ashford of Ashford"))
+        mockMvc.perform(get("/api/search?query=House Algood"))
                 .andExpect(status().isOk)
-                .andExpect(MockMvcResultMatchers.content().string("House Ashford of Ashford")).andDo(document("house-search-endpoint"))
+                .andExpect(MockMvcResultMatchers.content().string(containsString("House Algood"))).andDo(document("house-search-endpoint"))
     }
 
     @Test

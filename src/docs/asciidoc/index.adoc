@@ -1,0 +1,39 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/api/search?query=House%20Algood' -i -X GET
+----
+
+[source,http,options="nowrap"]
+----
+GET /api/search?query=House%20Algood HTTP/1.1
+Host: localhost:8080
+
+----
+
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 449
+
+[{"url":"https://www.anapioficeandfire.com/api/houses/1","name":"House Algood","region":"The Westerlands","coatOfArms":"A golden wreath, on a blue field with a gold border(Azure, a garland of laurel within a bordure or)","words":"","titles":[""],"seats":[""],"currentLord":"","heir":"","overlord":"https://www.anapioficeandfire.com/api/houses/229","founded":"","founder":"","diedOut":"","ancestralWeapons":[""],"cadetBranches":[],"swornMembers":[]}]
+----
+
+[source,bash]
+----
+$ http GET 'http://localhost:8080/api/search?query=House%20Algood'
+----
+
+[source,options="nowrap"]
+----
+[{"url":"https://www.anapioficeandfire.com/api/houses/1","name":"House Algood","region":"The Westerlands","coatOfArms":"A golden wreath, on a blue field with a gold border(Azure, a garland of laurel within a bordure or)","words":"","titles":[""],"seats":[""],"currentLord":"","heir":"","overlord":"https://www.anapioficeandfire.com/api/houses/229","founded":"","founder":"","diedOut":"","ancestralWeapons":[""],"cadetBranches":[],"swornMembers":[]}]
+----

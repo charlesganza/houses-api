@@ -1,0 +1,6 @@
+[source,http,options="nowrap"]
+----
+GET /api/search?query=House%20Algood HTTP/1.1
+Host: localhost:8080
+
+----

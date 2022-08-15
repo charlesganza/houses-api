@@ -1,4 +1,3 @@
-import org.gradle.internal.impldep.org.fusesource.jansi.AnsiRenderer.test
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 import org.springframework.boot.gradle.tasks.bundling.BootJar
@@ -9,7 +8,7 @@ plugins {
 	kotlin("jvm") version "1.7.10"
 	kotlin("plugin.spring") version "1.7.10"
 	kotlin("kapt") version "1.7.10"
-	id("org.asciidoctor.convert") version "1.5.12"
+	id("org.asciidoctor.jvm.convert") version "3.3.2"
 }
 
 group = "houses"
@@ -63,6 +62,9 @@ dependencies {
 
 	//rest docs
 	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc:2.0.6.RELEASE")
+
+	val asciidoctorExtensions: Configuration by configurations.creating
+	asciidoctorExtensions("org.springframework.restdocs:spring-restdocs-asciidoctor")
 }
 
 tasks.withType<KotlinCompile> {
@@ -72,10 +74,34 @@ tasks.withType<KotlinCompile> {
 	}
 }
 
-tasks.withType<BootJar> {
-	archiveFileName.set("app.jar")
-}
+tasks {
+	val snippetsDir = file("$buildDir/snippets")
 
-tasks.withType<Test> {
-	useJUnitPlatform()
+	withType<BootJar> {
+		archiveFileName.set("app.jar")
+	}
+
+	withType<Test> {
+		useJUnitPlatform()
+		systemProperty("org.springframework.restdocs.outputDir", snippetsDir)
+		outputs.dir(snippetsDir)
+	}
+
+	withType<org.asciidoctor.gradle.jvm.AsciidoctorTask> {
+		dependsOn(test)
+		attributes(mapOf("snippets" to snippetsDir))
+		inputs.dir(snippetsDir)
+		doFirst {
+			delete("src/main/resources/static/docs")
+		}
+	}
+
+	register<Copy>("copyDocument") {
+		dependsOn(asciidoctor)
+
+		destinationDir = file(".")
+		from(asciidoctor.get().outputDir) {
+			into("src/main/resources/static/docs")
+		}
+	}
 }
